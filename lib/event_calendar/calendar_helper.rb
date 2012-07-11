@@ -183,7 +183,7 @@ module EventCalendar
           cal << %(ec-today-header ) if options[:show_today] and (day == Date.today)
           cal << %(ec-other-month-header ) if (day < first) || (day > last)
           cal << %(ec-weekend-day-header ) if weekend?(day)
-          cal << %(occupied)
+          cal << %(occupied) unless Rental.where("? BETWEEN start_date AND end_date", day).any?
           cal << %(" style="height: #{options[:day_nums_height]}px;">)
           if options[:link_to_day_action]
             cal << day_link(day.day, day, options[:link_to_day_action])
