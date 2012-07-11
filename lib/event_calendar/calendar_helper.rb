@@ -73,7 +73,7 @@ module EventCalendar
 
         :use_all_day => false,
         :use_javascript => true,
-        :link_to_day_action => false
+        :link_to_day_action => false,
         :id => 0
       }
       options = defaults.merge options
