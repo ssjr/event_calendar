@@ -24,7 +24,7 @@ module EventCalendar
         first_day_of_week =  0
       end
       strip_start, strip_end = get_start_and_end_dates(shown_date, first_day_of_week)
-      events = events_for_date_range(strip_start, strip_end, find_options)
+      events = events_for_date_range(strip_start, strip_end, id, find_options)
       event_strips = create_event_strips(strip_start, strip_end, events)
       event_strips
     end
@@ -48,10 +48,10 @@ module EventCalendar
     end
     
     # Get the events overlapping the given start and end dates
-    def events_for_date_range(start_d, end_d, find_options = {})
+    def events_for_date_range(start_d, end_d, id, find_options = {})
       self.scoped(find_options).find(
         :all,
-        :conditions => [ "(? <= #{self.quoted_table_name}.#{self.end_at_field}) AND (#{self.quoted_table_name}.#{self.start_at_field}< ?) AND property_id = ?", start_d.to_time.utc, end_d.to_time.utc, find_options[:id] ],
+        :conditions => [ "(? <= #{self.quoted_table_name}.#{self.end_at_field}) AND (#{self.quoted_table_name}.#{self.start_at_field}< ?) AND property_id = ?", start_d.to_time.utc, end_d.to_time.utc, id ],
         :order => "#{self.quoted_table_name}.#{self.start_at_field} ASC"
       )
     end
