@@ -262,13 +262,13 @@ module EventCalendar
 
             else
               # there wasn't an event, so create an empty cell and container
-              cal << %(<td class="ec-event-cell ec-no-event-cell" )
-              cal << %(style="padding-top: #{options[:event_margin]}px;">)
-              cal << %(<div class="ec-event" )
-              cal << %(style="padding-top: #{options[:event_padding_top]}px; )
-              cal << %(height: #{options[:event_height] - options[:event_padding_top]}px;" )
-              cal << %(>)
-              cal << %(&nbsp;</div></td>)
+              # cal << %(<td class="ec-event-cell ec-no-event-cell" )
+              # cal << %(style="padding-top: #{options[:event_margin]}px;">)
+              # cal << %(<div class="ec-event" )
+              # cal << %(style="padding-top: #{options[:event_padding_top]}px; )
+              # cal << %(height: #{options[:event_height] - options[:event_padding_top]}px;" )
+              # cal << %(>)
+              # cal << %(&nbsp;</div></td>)
             end
           end
           cal << %(</tr>)
