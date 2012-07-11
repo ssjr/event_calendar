@@ -12,7 +12,6 @@ module EventCalendar
       self.end_at_field   = ( options[:end_at_field]   ||= :end_at  ).to_s
       alias_attribute :start_at, start_at_field unless start_at_field == 'start_at'
       alias_attribute :end_at,   end_at_field   unless end_at_field   == 'end_at'
-      alias_attribute :id, options[:id]
       before_save :adjust_all_day_dates
       send :include, InstanceMethods
     end
@@ -52,7 +51,7 @@ module EventCalendar
     def events_for_date_range(start_d, end_d, find_options = {})
       self.scoped(find_options).find(
         :all,
-        :conditions => [ "(? <= #{self.quoted_table_name}.#{self.end_at_field}) AND (#{self.quoted_table_name}.#{self.start_at_field}< ?) AND property_id = ?", start_d.to_time.utc, end_d.to_time.utc, id ],
+        :conditions => [ "(? <= #{self.quoted_table_name}.#{self.end_at_field}) AND (#{self.quoted_table_name}.#{self.start_at_field}< ?) AND property_id = ?", start_d.to_time.utc, end_d.to_time.utc, :id ],
         :order => "#{self.quoted_table_name}.#{self.start_at_field} ASC"
       )
     end
