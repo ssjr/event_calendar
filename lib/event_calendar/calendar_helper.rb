@@ -84,8 +84,8 @@ module EventCalendar
 
       # make the height calculations
       # tricky since multiple events in a day could force an increase in the set height
-      # height = options[:day_names_height]
-      # row_heights = cal_row_heights(options)
+      height = options[:day_names_height]
+      row_heights = cal_row_heights(options)
       # row_heights.each do |row_height|
       #   height += row_height
       # end
