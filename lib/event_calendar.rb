@@ -18,7 +18,7 @@ module EventCalendar
 
     # For the given month, find the start and end dates
     # Find all the events within this range, and create event strips for them
-    def event_strips_for_month(shown_date, first_day_of_week=0, find_options = {})
+    def event_strips_for_month(shown_date, first_day_of_week=0, id=0, find_options = {})
       if first_day_of_week.is_a?(Hash)
         find_options.merge!(first_day_of_week)
         first_day_of_week =  0
