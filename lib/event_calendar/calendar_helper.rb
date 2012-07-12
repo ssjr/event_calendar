@@ -157,6 +157,7 @@ module EventCalendar
       last_day_of_cal = end_of_week(last, options[:first_day_of_week])
       row_num = 0
 
+      rental = Rental.where("property_id = ?", options[:id]).map{|rental| [rental.start_date, rental.end_date]}
       # go through a week at a time, until we reach the end of the month
       while(last_day_of_week <= last_day_of_cal)
         cal << %(<div class="ec-row">)
@@ -177,12 +178,13 @@ module EventCalendar
 
         # day numbers row
         cal << %(<tr>)
+        
         first_day_of_week.upto(last_day_of_week) do |day|
           cal << %(<td class="ec-day-header )
           cal << %(ec-today-header ) if options[:show_today] and (day == Date.today)
           cal << %(ec-other-month-header ) if (day < first) || (day > last)
           cal << %(ec-weekend-day-header ) if weekend?(day)
-          cal << %(occupied) if Rental.where("property_id = ? AND ? BETWEEN start_date AND end_date", options[:id], day).any?
+          cal << %(occupied) if rental_in(rental, day)
           cal << %(">)
           if options[:link_to_day_action]
             cal << day_link(day.day, day, options[:link_to_day_action])
@@ -374,6 +376,12 @@ module EventCalendar
 
     def weekend?(date)
       [0, 6].include?(date.wday)
+    end
+    def rental_in(rentals, day)
+      rentals.each do |rental|
+        return true if day => rental[0] && day <= rental[1]
+      end
+      false
     end
   end
 end
