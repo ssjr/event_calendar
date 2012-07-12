@@ -137,10 +137,10 @@ module EventCalendar
       end
 
       # body container (holds day names and the calendar rows)
-      cal << %(<div class="ec-body" style="height: #{height}px;">)
+      # cal << %(<div class="ec-body" style="height: #{height}px;">)
 
       # day names
-      cal << %(<table class="ec-day-names" style="height: #{options[:day_names_height]}px;" cellpadding="0" cellspacing="0">)
+      cal << %(<table class="ec-day-names" cellpadding="0" cellspacing="0">)
       cal << %(<tbody><tr>)
       day_names.each do |day_name|
         cal << %(<th class="ec-day-name" title="#{day_name}">#{day_name}</th>)
@@ -148,30 +148,28 @@ module EventCalendar
       cal << %(</tr></tbody></table>)
 
       # container for all the calendar rows
-      cal << %(<div class="ec-rows" style="top: #{options[:day_names_height]}px; )
-      cal << %(height: #{height - options[:day_names_height]}px;">)
+      cal << %(<div class="ec-rows">)# style="top: #{options[:day_names_height]}px; )
+      # cal << %(height: #{height - options[:day_names_height]}px;">)
 
       # initialize loop variables
       first_day_of_week = beginning_of_week(first, options[:first_day_of_week])
       last_day_of_week = end_of_week(first, options[:first_day_of_week])
       last_day_of_cal = end_of_week(last, options[:first_day_of_week])
       row_num = 0
-      top = 0
 
       # go through a week at a time, until we reach the end of the month
       while(last_day_of_week <= last_day_of_cal)
-        cal << %(<div class="ec-row" style="top: #{top}px; height: #{row_heights[row_num]}px;">)
-        top += row_heights[row_num]
+        cal << %(<div class="ec-row">)
 
         # this weeks background table
-        cal << %(<table class="ec-row-bg" cellpadding="0" cellspacing="0">)
-        cal << %(<tbody><tr>)
-        first_day_of_week.upto(first_day_of_week+6) do |day|
-          today_class = (day == Date.today) ? "ec-today-bg" : ""
-          other_month_class = (day < first) || (day > last) ? 'ec-other-month-bg' : ''
-          cal << %(<td class="ec-day-bg #{today_class} #{other_month_class}">&nbsp;</td>)
-        end
-        cal << %(</tr></tbody></table>)
+        # cal << %(<table class="ec-row-bg" cellpadding="0" cellspacing="0">)
+        # cal << %(<tbody><tr>)
+        # first_day_of_week.upto(first_day_of_week+6) do |day|
+        #   today_class = (day == Date.today) ? "ec-today-bg" : ""
+        #   other_month_class = (day < first) || (day > last) ? 'ec-other-month-bg' : ''
+        #   cal << %(<td class="ec-day-bg #{today_class} #{other_month_class}">&nbsp;</td>)
+        # end
+        # cal << %(</tr></tbody></table>)
 
         # calendar row
         cal << %(<table class="ec-row-table" cellpadding="0" cellspacing="0">)
@@ -185,7 +183,7 @@ module EventCalendar
           cal << %(ec-other-month-header ) if (day < first) || (day > last)
           cal << %(ec-weekend-day-header ) if weekend?(day)
           cal << %(occupied) if Rental.where("property_id = ? AND ? BETWEEN start_date AND end_date", options[:id], day).any?
-          cal << %(" style="height: #{options[:day_nums_height]}px;">)
+          cal << %(">)
           if options[:link_to_day_action]
             cal << day_link(day.day, day, options[:link_to_day_action])
           else
@@ -286,7 +284,7 @@ module EventCalendar
       end
 
       cal << %(</div>)
-      cal << %(</div>)
+      # cal << %(</div>)
       cal << %(</div>)
     end
 
