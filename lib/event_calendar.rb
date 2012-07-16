@@ -51,7 +51,7 @@ module EventCalendar
     def events_for_date_range(start_d, end_d, id, find_options = {})
       self.scoped(find_options).find(
         :all,
-        :conditions => [ "(? <= #{self.quoted_table_name}.#{self.end_at_field}) AND (#{self.quoted_table_name}.#{self.start_at_field}< ?) AND property_id = ?", start_d.to_time.utc, end_d.to_time.utc, id ],
+        :conditions => [ "property_id = ? AND (#{self.quoted_table_name}.#{self.end_at_field} >= ? OR #{self.quoted_table_name}.#{self.start_at_field} <= ?)", id, start_d.to_time.utc, end_d.to_time.utc],
         :order => "#{self.quoted_table_name}.#{self.start_at_field} ASC"
       )
     end
