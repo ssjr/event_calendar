@@ -184,6 +184,7 @@ module EventCalendar
           cal << %(ec-today-header ) if options[:show_today] and (day == Date.today)
           cal << %(ec-other-month-header ) if (day < first) || (day > last)
           cal << %(ec-weekend-day-header ) if weekend?(day)
+          cal << %(past ) if day.past?
           cal << %(occupied) if rental_in(rental, day)
           cal << %(">)
           if options[:link_to_day_action]
