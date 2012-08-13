@@ -186,7 +186,8 @@ module EventCalendar
           cal << %(ec-weekend-day-header ) if weekend?(day)
           cal << %(past ) if day < Date.today
           cal << %(occupied) if rental_in(rental, day)
-          cal << %(">)
+          cal << %(")
+          cal << %( data-day="#{day.day}" data-month="#{day.month}" data-year="#{day.year}" >)
           if options[:link_to_day_action]
             cal << day_link(day.day, day, options[:link_to_day_action])
           else
