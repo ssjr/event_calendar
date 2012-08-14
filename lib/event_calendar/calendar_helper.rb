@@ -381,7 +381,7 @@ module EventCalendar
     end
     def rental_in(rentals, day)
       rentals.each do |rental|
-        return true if day >= rental[0] && day <= rental[1]
+        return true if day >= rental[0] && day < rental[1]
       end
       false
     end
