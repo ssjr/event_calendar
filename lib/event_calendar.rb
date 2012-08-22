@@ -10,8 +10,8 @@ module EventCalendar
       cattr_accessor :start_at_field, :end_at_field, :id
       self.start_at_field = ( options[:start_at_field] ||= :start_date).to_s
       self.end_at_field   = ( options[:end_at_field]   ||= :start_date  ).to_s
-      alias_attribute :start_date, start_at_field unless start_at_field == 'start_date'
-      alias_attribute :end_date,   end_at_field   unless end_at_field   == 'end_date'
+      alias_attribute :start_at, start_at_field
+      alias_attribute :end_at,   end_at_field
       before_save :adjust_all_day_dates
       send :include, InstanceMethods
     end
